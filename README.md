@@ -1,0 +1,2 @@
+# scoreboard
+Simple scoreboard library
