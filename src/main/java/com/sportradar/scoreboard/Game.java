@@ -1,6 +1,5 @@
 package com.sportradar.scoreboard;
 
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -11,23 +10,18 @@ public class Game implements Cloneable{
     private String awayTeam;
     private int homeScore;
     private int awayScore;
-    private Date startTime;
-
     private String id;
+    private int order;
 
-    public Game(String homeTeam, String awayTeam) {
+    public Game(String homeTeam, String awayTeam, int order) {
         this.homeTeam = homeTeam;
+        this.order = order;
         this.awayTeam = awayTeam;
-        startTime = new Date();
         id = UUID.randomUUID().toString();
     }
 
     public String getId() {
         return id;
-    }
-
-    public Date getStartTime() {
-        return startTime;
     }
 
     public String getAwayTeam() {
@@ -46,8 +40,8 @@ public class Game implements Cloneable{
         return homeScore;
     }
 
-    public int getTotalScore() {
-        return homeScore + awayScore;
+    public int getOrder() {
+        return order;
     }
 
     public Game updateScore(int homeScore, int awayScore) {
@@ -61,5 +55,9 @@ public class Game implements Cloneable{
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String toString() {
+        return homeTeam + " - " + awayTeam + " " + homeScore + ":" + awayScore + " _ " + order;
     }
 }

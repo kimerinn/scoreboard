@@ -1,9 +1,6 @@
 package com.sportradar.scoreboard;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -14,19 +11,22 @@ import java.util.stream.Collectors;
 public class Scoreboard
 {
     private Map<String, Game> games;
+    private int counter;
 
     public Scoreboard() {
         games = new HashMap<>();
     }
 
     public String startNewGame(String homeTeam, String awayTeam) {
-        Game game = new Game(homeTeam, awayTeam);
+        Game game = new Game(homeTeam, awayTeam, counter++);
         games.put(game.getId(), game);
         return game.getId();
     }
 
     public List<Game> getSummary() {
-        return games.values().stream().sorted(new GameComparator()).collect(Collectors.toList());
+        List<Game> result = games.values().stream().sorted(new GameComparator()).collect(Collectors.toList());
+        Collections.reverse(result);
+        return result;
     }
 
     public void updateScore(String id, int homeScore, int awayScore) {
@@ -48,15 +48,8 @@ public class Scoreboard
 
         @Override
         public int compare(Game o1, Game o2) {
-            if (o1.getTotalScore() > o2.getTotalScore()) {
-                return 1;
-            }
-            else if (o1.getTotalScore() < o2.getTotalScore()) {
-                return -1;
-            }
-            else {
-                return o1.getStartTime().compareTo(o2.getStartTime());
-            }
+            int compareResult = Integer.compare(o1.getHomeScore() + o1.getAwayScore(), o2.getHomeScore() + o2.getAwayScore());
+            return compareResult == 0 ? Integer.compare(o1.getOrder(), o2.getOrder()) : compareResult;
         }
     }
 }
