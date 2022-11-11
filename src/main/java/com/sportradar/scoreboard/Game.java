@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  *
  */
-public class Game {
+public class Game implements Cloneable{
     private String homeTeam;
     private String awayTeam;
     private int homeScore;
@@ -46,8 +46,20 @@ public class Game {
         return homeScore;
     }
 
-    public void updateScore(int homeScore, int awayScore) {
-        this.homeScore = homeScore;
-        this.awayScore = awayScore;
+    public int getTotalScore() {
+        return homeScore + awayScore;
+    }
+
+    public Game updateScore(int homeScore, int awayScore) {
+        try {
+            Game updated = (Game) clone();
+            updated.homeScore = homeScore;
+            updated.awayScore = awayScore;
+            return updated;
+        } catch (CloneNotSupportedException e) {
+            //newer should happen
+            e.printStackTrace();
+            return null;
+        }
     }
 }
