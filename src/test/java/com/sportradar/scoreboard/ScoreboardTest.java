@@ -39,6 +39,31 @@ public class ScoreboardTest extends TestCase
     }
 
     @Test
+    public void testFinishGame() {
+        String id = scoreboard.startNewGame("Argentina", "Yamaika");
+        scoreboard.finishGame(id);
+        List<Game> summary = scoreboard.getSummary();
+        assertEquals(0, summary.size());
+    }
+
+    @Test
+    public void testFinishNotExistingGame() {
+        String id = scoreboard.startNewGame("Argentina", "Yamaika");
+        scoreboard.finishGame(id + "_fake");
+        List<Game> summary = scoreboard.getSummary();
+        assertEquals(1, summary.size());
+        assertEquals(id, summary.get(0).getId());
+    }
+
+    @Test
+    public void testFinishNullGame() {
+        String id = scoreboard.startNewGame("Argentina", "Yamaika");
+        scoreboard.finishGame(null);
+        List<Game> summary = scoreboard.getSummary();
+        assertEquals(1, summary.size());
+    }
+
+    @Test
     public void testGetSummary() {
     }
 

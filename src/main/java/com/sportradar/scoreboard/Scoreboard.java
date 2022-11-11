@@ -41,7 +41,7 @@ public class Scoreboard
     }
 
     public void finishGame(String id) {
-
+        games.remove(id);
     }
 
     public static class GameComparator implements Comparator<Game> {
