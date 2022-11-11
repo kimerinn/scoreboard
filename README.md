@@ -1,8 +1,9 @@
 # scoreboard
 Simple scoreboard library. 
+
 Not thread-safe!
 
-Run following command in project root to compile library and run tests (maven and java should be installed):
+Run following command in project root to compile library and run tests:
 
 mvn clean install
 
